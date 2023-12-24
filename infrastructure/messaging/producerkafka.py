@@ -16,12 +16,18 @@ class producerkafka:
         self.producer = KafkaProducer(bootstrap_servers=[self.server],
                             value_serializer=lambda x: 
                             dumps(x).encode('utf-8'))
-        
-        self.producer.send(self.topic, value = {"mensagem":"connected"})
         sleep(0.1)
 
     def send(self, key, value):
                    
         self.data = {key: value}
+        print((self.data))
+        self.producer.send(self.topic, value = self.data)
+        sleep(0.1)
+    
+    def sendJson(self, data):
+        
+        self.data = data
+        print((self.data))
         self.producer.send(self.topic, value = self.data)
         sleep(0.1)
